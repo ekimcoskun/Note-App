@@ -1,17 +1,22 @@
 let notes = getSavedNotes()
 
 const filters = {
-    searchText: ''
+    searchText: '',
+    sortBy: 'byEdited'
 }
 
 renderNotes(notes, filters)
 
 document.querySelector('#create-note').addEventListener('click', function (e) {
     const id = uuidv4()
+    const createdAt = moment()
+    timestamp = createdAt.valueOf()
     notes.push({
         id: id,
         title: '',
-        body: ''
+        body: '',
+        createdAt: timestamp , 
+        updatedAt: timestamp
     })
 
     saveNotes(notes)
@@ -24,7 +29,8 @@ document.querySelector('#search-text').addEventListener('input', function (e) {
 })
 
 document.querySelector('#filter-by').addEventListener('change', function (e) {
-    console.log(e.target.value)
+    filters.sortBy = e.target.value
+    renderNotes(notes,filters)
 })
 
 window.addEventListener('storage', function(e){
@@ -34,6 +40,8 @@ window.addEventListener('storage', function(e){
     }
 })
 
+
+/*
 const birthday = new Date('August 13 1998 13:58:09')
 const watDate = new Date('June 20 1995 20:50')
 
@@ -46,3 +54,11 @@ if(timestamp1-timestamp2 <= 0 ){
 else{
     console.log(`Wat is earlier :  ${watDate.toString()}`)
 }
+
+const birthday = moment()
+birthday.year(1998)
+birthday.month("August")
+birthday.date(13)
+
+console.log(birthday.format('ll'))
+*/
